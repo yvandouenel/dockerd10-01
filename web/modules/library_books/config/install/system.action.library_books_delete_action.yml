@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - library_books
+_core:
+  default_config_hash: njKzo4iycwzli1lCnnfV897PI8QZ_PNa6gIWZBTmKNE
+id: library_books_delete_action
+label: 'Delete library bookss'
+type: library_books
+plugin: 'entity:delete_action:library_books'
+configuration: {  }

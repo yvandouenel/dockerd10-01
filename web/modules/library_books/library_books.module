@@ -1,0 +1,144 @@
+<?php declare(strict_types = 1);
+
+/**
+ * @file
+ * Provides a library books entity type.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\user\UserInterface;
+use Drupal\Core\Url;
+
+
+
+/**
+ * Prepares variables for library books templates.
+ *
+ * Default template: library-books.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the library books information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_library_books(array &$variables): void {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function library_books_user_cancel($edit, UserInterface $account, $method): void {
+  switch ($method) {
+    case 'user_cancel_block_unpublish':
+      // Unpublish library bookss.
+      $storage = \Drupal::entityTypeManager()->getStorage('library_books');
+      $library_books_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->condition('status', 1)
+        ->accessCheck(FALSE)
+        ->execute();
+      foreach ($storage->loadMultiple($library_books_ids) as $library_books) {
+        $library_books->set('status', FALSE)->save();
+      }
+      break;
+
+    case 'user_cancel_reassign':
+      // Anonymize library bookss.
+      $storage = \Drupal::entityTypeManager()->getStorage('library_books');
+      $library_books_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->accessCheck(FALSE)
+        ->execute();
+      foreach ($storage->loadMultiple($library_books_ids) as $library_books) {
+        $library_books->setOwnerId(0)->save();
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for user entities.
+ */
+function library_books_user_predelete(UserInterface $account): void {
+  // Delete library bookss that belong to this account.
+  $storage = \Drupal::entityTypeManager()->getStorage('library_books');
+  $library_books_ids = $storage->getQuery()
+    ->condition('uid', $account->id())
+    ->accessCheck(FALSE)
+    ->execute();
+  $storage->delete(
+    $storage->loadMultiple($library_books_ids)
+  );
+}
+
+/**
+* Implements hook_toolbar().
+*/
+function library_books_toolbar() {
+  $user = \Drupal::currentUser();
+  $items = [];
+  $items['library_books'] = [
+    // Etant donné que le menu doit changer en fonction des droits de l'utilisateur,
+    // on supprime le cache en fonction du contexte user.permissions 
+    '#cache' => [
+      'contexts' => [
+        'user.permissions',
+      ],
+    ],
+  ];
+
+  if (!\Drupal::currentUser()->hasPermission('access library_books')) {
+    return $items;
+  }
+
+  $items['toolbar_menu_backlinks_notifications'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+        '#type' => 'link',
+        '#title' => 'BOB',
+        '#url' =>  Url::fromRoute('library_books.management'),
+        '#options' => [
+            'attributes' => array(
+                'title' => t('Backlinks Notification'),
+                'class' => array(
+                'toolbar-item',
+                'toolbar-icon',
+                'toolbar-icon-backlinks-notifications',
+                ),
+            ),
+        ],
+    ],
+    '#weight' => 999,
+    '#attached' => array(
+        'library' => array(
+            'backlinks_notifications/backlinks_notifications',
+        ),
+    ),
+];
+return $items;
+}
+
+/**
+ * Implements hook_theme()
+ *
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ *
+ * @return \array[][]
+ */
+function library_books_theme($existing, $type, $theme, $path) {
+  return [
+    'books_management' => [
+      'variables' => [
+        'user' => NULL,
+      ],
+    ],
+  ];
+}

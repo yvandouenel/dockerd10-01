@@ -1,0 +1,12 @@
+administer library_books types:
+  title: 'Administer library books types'
+  description: 'Maintain the types of library books entity.'
+  restrict access: true
+view library_books:
+  title: 'View library books'
+edit library_books:
+  title: 'Edit library books'
+delete library_books:
+  title: 'Delete library books'
+create library_books:
+  title: 'Create library books'

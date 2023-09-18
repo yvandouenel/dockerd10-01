@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - library_books
+_core:
+  default_config_hash: yqKPFsltP6lLd4v8-Gct9llq9gzNwXxS5s9lvIol1b8
+id: library_books_save_action
+label: 'Save library bookss'
+type: library_books
+plugin: 'entity:save_action:library_books'
+configuration: {  }

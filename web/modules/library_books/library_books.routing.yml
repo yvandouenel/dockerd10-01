@@ -1,0 +1,7 @@
+library_books.management:
+  path: '/manageBooks'
+  defaults:
+    _controller: '\Drupal\library_books\Controller\LibraryBooksManagement::index'
+    _title: "Gestion des livres"
+  requirements:
+    _role: 'administrator'

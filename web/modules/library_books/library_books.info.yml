@@ -1,0 +1,7 @@
+name: 'Library books'
+type: module
+description: "Module de gestion d'une librairie en ligne - Doit gérer des livres et des exemplaires"
+package: 'Custom'
+core_version_requirement: ^10
+dependencies:
+  - unique_content_field_validation:unique_content_field_validation

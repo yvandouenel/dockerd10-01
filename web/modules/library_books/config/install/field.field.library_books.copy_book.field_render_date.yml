@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.library_books.field_render_date
+    - library_books.library_books_type.copy_book
+  module:
+    - datetime
+id: library_books.copy_book.field_render_date
+field_name: field_render_date
+entity_type: library_books
+bundle: copy_book
+label: 'Date de rendu'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

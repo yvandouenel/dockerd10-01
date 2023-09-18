@@ -1,0 +1,10 @@
+entity.library_books.edit_form:
+  route_name: entity.library_books.edit_form
+  group: library_books
+  title: 'Edit'
+
+entity.library_books.delete_form:
+  route_name: entity.library_books.delete_form
+  group: library_books
+  title: 'Delete'
+  weight: 10

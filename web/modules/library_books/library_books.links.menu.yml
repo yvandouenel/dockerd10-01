@@ -1,0 +1,11 @@
+entity.library_books_type.collection:
+  title: 'Library books types'
+  description: 'Manage and CRUD actions on Library books type.'
+  parent: system.admin_structure
+  route_name: entity.library_books_type.collection
+
+entity.library_books.collection:
+  title: 'Library bookss'
+  description: 'List of library bookss.'
+  route_name: entity.library_books.collection
+  parent: system.admin_content

@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.library_books.field_own_by
+    - library_books.library_books_type.copy_book
+  content:
+    - 'user:user:fb7cd0b1-b743-4ced-be51-d342f6afa4b5'
+id: library_books.copy_book.field_own_by
+field_name: field_own_by
+entity_type: library_books
+bundle: copy_book
+label: 'Détenu par'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    target_uuid: fb7cd0b1-b743-4ced-be51-d342f6afa4b5
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: true
+field_type: entity_reference

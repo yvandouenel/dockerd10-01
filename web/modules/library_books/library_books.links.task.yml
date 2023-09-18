@@ -1,0 +1,26 @@
+entity.library_books.view:
+  title: 'View'
+  route_name: entity.library_books.canonical
+  base_route: entity.library_books.canonical
+entity.library_books.edit_form:
+  title: 'Edit'
+  route_name: entity.library_books.edit_form
+  base_route: entity.library_books.canonical
+entity.library_books.delete_form:
+  title: 'Delete'
+  route_name: entity.library_books.delete_form
+  base_route: entity.library_books.canonical
+  weight: 10
+entity.library_books.collection:
+  title: 'Library bookss'
+  route_name: entity.library_books.collection
+  base_route: system.admin_content
+  weight: 10
+entity.library_books_type.edit_form:
+  title: 'Edit'
+  route_name: entity.library_books_type.edit_form
+  base_route: entity.library_books_type.edit_form
+entity.library_books_type.collection:
+  title: 'List'
+  route_name: entity.library_books_type.collection
+  base_route: entity.library_books_type.collection

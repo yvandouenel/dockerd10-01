@@ -1,0 +1,11 @@
+library_books.type_add:
+  title: 'Add library books type'
+  route_name: entity.library_books_type.add_form
+  appears_on:
+    - entity.library_books_type.collection
+
+library_books.add_page:
+  title: 'Add library books'
+  route_name: entity.library_books.add_page
+  appears_on:
+    - entity.library_books.collection
