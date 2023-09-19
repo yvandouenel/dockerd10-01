@@ -3,7 +3,8 @@
  * @file
  *
  * Available variables:
- * - user :
+ * - user
+ * - books
  * @ingroup themeable
  */
 #}
@@ -11,6 +12,8 @@
 <div class="row">
   <section class="offset-md-3 col-md-6">
     <h3 class="mt-5">Bienvenue {{ user.name }}</h3>
-    
+    {% for bookid in books %}
+    <li>{{ bookid }}</li>
+  {% endfor %}
   </section>
 </div>

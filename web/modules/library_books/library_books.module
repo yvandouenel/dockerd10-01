@@ -100,7 +100,7 @@ function library_books_toolbar() {
     '#type' => 'toolbar_item',
     'tab' => [
         '#type' => 'link',
-        '#title' => 'BOB',
+        '#title' => 'Gestion des livres',
         '#url' =>  Url::fromRoute('library_books.management'),
         '#options' => [
             'attributes' => array(
@@ -138,6 +138,7 @@ function library_books_theme($existing, $type, $theme, $path) {
     'books_management' => [
       'variables' => [
         'user' => NULL,
+        'books' => [],
       ],
     ],
   ];
