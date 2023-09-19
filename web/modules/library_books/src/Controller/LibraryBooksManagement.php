@@ -18,7 +18,14 @@ class LibraryBooksManagement extends ControllerBase {
   protected $entityTypeManager;
 
   /**
-   * {@inheritdoc}
+   * The current User.
+   *
+   * @var Drupal\Core\Session\AccountProxy
+   */
+  protected $currentUser;
+
+  /**
+   *
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -34,6 +41,7 @@ class LibraryBooksManagement extends ControllerBase {
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->currentUser = $this->entityTypeManager()->getStorage('user')->load($this->currentUser()->id());
   }
 
   /**
@@ -48,12 +56,10 @@ class LibraryBooksManagement extends ControllerBase {
       ->condition('status', 1)
       ->execute();
     // $entities_id = [1, 2, 3];
-    // $drupal_account = User::load($this->current_user->id());
     return [
       '#theme' => 'books_management',
       '#user' => [
-    // $current_user->getAccountName()
-        "name" => "Jojo",
+        "name" => $this->currentUser->getDisplayName(),
       ],
       "#books" => $entities_id,
     ];
