@@ -33,13 +33,20 @@ class LibraryBooksManagement extends ControllerBase {
       ->condition('bundle', 'book', '=')
       ->condition('status', 1)
       ->execute();
-    // $entities_id = [1, 2, 3];
+
+    // Chargement de entités.
+    // $entities_books = $this->entityTypeManager()->getStorage('library_books')->loadMultiple($entities_id);
+    // dpm($entities_books);
     return [
       '#theme' => 'books_management',
       '#user' => [
         "name" => $this->currentUser->getDisplayName(),
       ],
       "#books" => $entities_id,
+      '#cache' => [
+        'tags' => ['library_books_list:book', 'library_books_list:copy_book'],
+        "contexts" => ['user'],
+      ],
     ];
   }
 

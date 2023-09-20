@@ -10,10 +10,27 @@
 #}
 
 <div class="row">
-  <section class="offset-md-3 col-md-6">
-    <h3 class="mt-5">Bienvenue {{ user.name }}</h3>
-    {% for bookid in books %}
-    <li>{{ bookid }}</li>
-  {% endfor %}
-  </section>
+	<section class="col-md-12" id="manage-books-section">
+		<h2 class="mt-5">Bienvenue
+			{{ user.name }}</h2>
+      {# <a href="{{ path(entity.library_books.add_form) }}/book">Ajouter un livre</a> #}
+      <a href="{{  path('entity.library_books.add_form', {'library_books_type': 'book'}) }}">Ajouter un livre</a>
+		<section id="book-list">
+			{% for bookid in books %}
+				<section id="book-detail">
+					{% set entity = drupal_entity('library_books', bookid, 'teaser') %}
+					<section>
+						{{ entity }}</section>
+					{% set field_books_copies = drupal_field('field_copy_book', 'library_books', bookid) %}
+					{% if field_books_copies|length < 2 %}
+						<h4>Pas d'exemplaire disponible</h4>
+					{% endif %}
+					{% if drupal_field('field_copy_book', 'library_books', bookid) is null %}{% endif %}
+					{# {{ dump(entity) }} #}
+					{#  <li>{{ drupal_field('field_copy_book', 'library_books', bookid) }}</li> #}
+				</section>
+			{% endfor %}
+		</section>
+
+	</section>
 </div>
