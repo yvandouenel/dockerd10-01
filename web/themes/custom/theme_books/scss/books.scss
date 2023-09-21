@@ -1,24 +1,40 @@
 #manage-books-section {
   #book-list {
-    > section {
+    >section {
       border-bottom: 1px solid black;
       margin-bottom: 20px;
+
+      > section {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        > .field--name-field-copy-book {
+          flex-basis: 45%;
+        }
+        > .field--name-label {
+          flex-basis: 30%;
+        }
+      }
+
       .field--name-field-copy-book {
         .field__items {
-    
+          
           >.field__item {
             display: flex;
             justify-content: space-between;
             padding: 5px;
-    
+            gap: 5px;
+
             &:nth-child(2n + 1) {
               background-color: $gray-300;
             }
+
+            
           }
         }
-    
+
       }
     }
   }
-  
+
 }
