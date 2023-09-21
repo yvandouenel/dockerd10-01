@@ -1,0 +1,5 @@
+services:
+  library_books.subscriber:
+    class: Drupal\library_books\EventSubscriber\BooksCopySubscriber
+    tags:
+      - {name: event_subscriber}

@@ -13,17 +13,21 @@
 	<section class="col-md-12" id="manage-books-section">
 		<h2 class="mt-5">Bienvenue
 			{{ user.name }}</h2>
-      {# <a href="{{ path(entity.library_books.add_form) }}/book">Ajouter un livre</a> #}
-      <a href="{{  path('entity.library_books.add_form', {'library_books_type': 'book'}) }}">Ajouter un livre</a>
+		{# <a href="{{ path(entity.library_books.add_form) }}/book">Ajouter un livre</a> #}
+		<a class="btn btn-success" href="{{ path('entity.library_books.add_form', {'library_books_type': 'book'}) }}">Ajouter un livre</a>
 		<section id="book-list">
 			{% for bookid in books %}
 				<section id="book-detail">
 					{% set entity = drupal_entity('library_books', bookid, 'teaser') %}
 					<section>
-						{{ entity }}</section>
+						{{ entity }}
+						<a class="btn btn-success mt-4 ml-2" href="{{ path('entity.library_books.add_form', {'library_books_type': 'copy_book'},{'query': { 'book_id': bookid }}) }}">Ajouter un exemplaire de ce livre</a>
+					</section>
 					{% set field_books_copies = drupal_field('field_copy_book', 'library_books', bookid) %}
 					{% if field_books_copies|length < 2 %}
-						<h4>Pas d'exemplaire disponible</h4>
+						<h4>Pas d'exemplaire disponible -
+							<a href="/library-books/{{ bookid}}/delete">Supprimer ce livre</a>
+						</h4>
 					{% endif %}
 					{% if drupal_field('field_copy_book', 'library_books', bookid) is null %}{% endif %}
 					{# {{ dump(entity) }} #}

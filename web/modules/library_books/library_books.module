@@ -1,15 +1,20 @@
-<?php declare(strict_types = 1);
+<?php
+
+/**
+ * @file
+ */
+
+declare(strict_types = 1);
 
 /**
  * @file
  * Provides a library books entity type.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\user\UserInterface;
 use Drupal\Core\Url;
-
-
+use Drupal\user\UserInterface;
 
 /**
  * Prepares variables for library books templates.
@@ -77,14 +82,14 @@ function library_books_user_predelete(UserInterface $account): void {
 }
 
 /**
-* Implements hook_toolbar().
-*/
+ * Implements hook_toolbar().
+ */
 function library_books_toolbar() {
   $user = \Drupal::currentUser();
   $items = [];
   $items['library_books'] = [
     // Etant donné que le menu doit changer en fonction des droits de l'utilisateur,
-    // on supprime le cache en fonction du contexte user.permissions 
+    // on supprime le cache en fonction du contexte user.permissions.
     '#cache' => [
       'contexts' => [
         'user.permissions',
@@ -99,28 +104,28 @@ function library_books_toolbar() {
   $items['toolbar_menu_backlinks_notifications'] = [
     '#type' => 'toolbar_item',
     'tab' => [
-        '#type' => 'link',
-        '#title' => 'Gestion des livres',
-        '#url' =>  Url::fromRoute('library_books.management'),
-        '#options' => [
-            'attributes' => array(
-                'title' => t('Backlinks Notification'),
-                'class' => array(
-                'toolbar-item',
-                'toolbar-icon',
-                'toolbar-icon-backlinks-notifications',
-                ),
-            ),
+      '#type' => 'link',
+      '#title' => 'Gestion des livres',
+      '#url' => Url::fromRoute('library_books.management'),
+      '#options' => [
+        'attributes' => [
+          'title' => t('Backlinks Notification'),
+          'class' => [
+            'toolbar-item',
+            'toolbar-icon',
+            'toolbar-icon-backlinks-notifications',
+          ],
         ],
+      ],
     ],
     '#weight' => 999,
-    '#attached' => array(
-        'library' => array(
-            'backlinks_notifications/backlinks_notifications',
-        ),
-    ),
-];
-return $items;
+    '#attached' => [
+      'library' => [
+        'backlinks_notifications/backlinks_notifications',
+      ],
+    ],
+  ];
+  return $items;
 }
 
 /**
@@ -142,4 +147,17 @@ function library_books_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function library_books_form_library_books_copy_book_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $book_id = \Drupal::request()->query->get('book_id');
+  if (!empty($book_id)) {
+    $entity_book = \Drupal::entityTypeManager()->getStorage("library_books")->load($book_id);
+    $form['field_copy_of']['widget']['#options'] = [$entity_book->id() => $entity_book->label()];
+
+  }
+
 }

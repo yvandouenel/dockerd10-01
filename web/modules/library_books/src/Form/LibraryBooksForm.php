@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\library_books\Form;
 
@@ -15,7 +17,6 @@ final class LibraryBooksForm extends ContentEntityForm {
    */
   public function save(array $form, FormStateInterface $form_state): int {
     $result = parent::save($form, $form_state);
-
     $message_args = ['%label' => $this->entity->toLink()->toString()];
     $logger_args = [
       '%label' => $this->entity->label(),
@@ -35,6 +36,16 @@ final class LibraryBooksForm extends ContentEntityForm {
 
       default:
         throw new \LogicException('Could not save the entity.');
+    }
+
+    if ($this->entity->bundle() === "copy_book") {
+      // Modification du livre concerné par ce nouvel exemplaire :
+      $book_id = $this->entity->field_copy_of[0]->target_id;
+      $entity_book = \Drupal::entityTypeManager()->getStorage("library_books")->load($book_id);
+      $entity_book->get('field_copy_book')->appendItem([
+        'target_id' => $this->entity->id(),
+      ]);
+      $entity_book->save();
     }
 
     $form_state->setRedirectUrl($this->entity->toUrl());
