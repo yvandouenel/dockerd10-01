@@ -8,7 +8,6 @@ use Drupal\entity_events\EventSubscriber\EntityEventInsertSubscriber;
 class BooksCopySubscriber extends EntityEventInsertSubscriber {
 
   public function onEntityInsert(EntityEvent $event) {
-    dpm($event);
     \Drupal::messenger()->addMessage('Entity inserted');
   }
 
