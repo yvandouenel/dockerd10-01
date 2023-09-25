@@ -1,0 +1,8 @@
+api_fetch:
+  version: 1.x
+  js: 
+    js/fetch.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

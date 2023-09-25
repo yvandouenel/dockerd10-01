@@ -1,0 +1,20 @@
+uuid: 4ba870b4-1009-4a66-aa57-2e64186c2b72
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - library_books
+id: library_books.field_render_date
+field_name: field_render_date
+entity_type: library_books
+type: datetime
+settings:
+  datetime_type: datetime
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,6 @@
+uuid: 784aacd0-15b3-42ac-a388-58c7be3e8f4f
+langcode: en
+status: true
+dependencies: {  }
+id: copy_book
+label: 'Copy book'

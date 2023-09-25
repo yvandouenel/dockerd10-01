@@ -8,7 +8,7 @@
  * @ingroup themeable
  */
 #}
-
+{{ attach_library('library_books/api_fetch') }}
 <div class="row">
 	<section class="col-md-12" id="manage-books-section">
 		<h2 class="mt-5">Bienvenue
@@ -17,7 +17,7 @@
 		<a class="btn btn-success" href="{{ path('entity.library_books.add_form', {'library_books_type': 'book'}) }}">Ajouter un livre</a>
 		<section id="book-list">
 			{% for bookid in books %}
-				<section id="book-detail">
+				<section class="book-detail" id="book-id-{{ bookid }}">
 					{% set entity = drupal_entity('library_books', bookid, 'teaser') %}
 					<section>
 						{{ entity }}
@@ -27,6 +27,7 @@
 					{% if field_books_copies|length < 2 %}
 						<h4>Pas d'exemplaire disponible -
 							<a href="/library-books/{{ bookid}}/delete">Supprimer ce livre</a>
+							<a class="delete-api" data-id="{{ bookid}}" href="/">Supprimer ce livre via api</a>
 						</h4>
 					{% endif %}
 					{% if drupal_field('field_copy_book', 'library_books', bookid) is null %}{% endif %}
