@@ -26,8 +26,8 @@
 					{% set field_books_copies = drupal_field('field_copy_book', 'library_books', bookid) %}
 					{% if field_books_copies|length < 2 %}
 						<h4>Pas d'exemplaire disponible -
-							<a href="/library-books/{{ bookid}}/delete">Supprimer ce livre</a>
-							<a class="delete-api" data-id="{{ bookid}}" href="/">Supprimer ce livre via api</a>
+							{# <a href="/library-books/{{ bookid}}/delete">Supprimer ce livre</a> #}
+							<a class="delete-api" data-id="{{ bookid}}" href="/">Supprimer ce livre</a>
 						</h4>
 					{% endif %}
 					{% if drupal_field('field_copy_book', 'library_books', bookid) is null %}{% endif %}
